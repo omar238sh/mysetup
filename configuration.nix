@@ -36,7 +36,7 @@
     };
   };
 
-
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nixpkgs.config.allowUnfree = true;
 
   nix = {
