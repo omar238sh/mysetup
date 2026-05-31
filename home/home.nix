@@ -16,7 +16,7 @@
     fastfetch
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     zed-editor
-   # steam-run
+    devenv
     nixd
   ];
 
