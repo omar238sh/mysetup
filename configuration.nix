@@ -15,6 +15,7 @@
     doc.enable = false;
     info.enable = false;
     dev.enable = false;
+    nixos.enable = false;
   };
   boot = {
     kernelPackages = pkgs.linuxPackages;
