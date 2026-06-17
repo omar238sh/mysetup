@@ -155,13 +155,19 @@
   security.pam.services.login.enableGnomeKeyring = true;
 
   fileSystems."/" = {
-    options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
+     options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
   };
 
-
+  
+  fileSystems."/home" = {
+        device = "/dev/disk/by-uuid/2001ec2e-d657-4e6d-94e4-d19fea9973f6";
+        fsType = "btrfs";
+        options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
+    };
+    
   fileSystems."/mnt/tera" = {
       device = "/dev/disk/by-uuid/583ae00c-135a-4827-bae6-04ae086f6d12";
       fsType = "btrfs";
-      options = [ "compress=zstd" "noatime" "nofail" ];
+      options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
   };
 }
