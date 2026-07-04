@@ -15,9 +15,10 @@
     hyprshot
     fastfetch
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    zed-editor
-    devenv
+    
     nixd
+    distrobox
+    telegram-desktop
   ];
 
   programs.starship = {

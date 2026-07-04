@@ -36,10 +36,10 @@
       efi.canTouchEfiVariables = true;
     };
   };
-
+  virtualisation.podman.enable = true;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nixpkgs.config.allowUnfree = true;
-
+  nix.nixPath =[ "nixpkgs=${inputs.nixpkgs}" ];
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -94,7 +94,7 @@
 
   users.users.omar = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "disk" "storage"];
     shell = pkgs.fish;
   };
 
@@ -153,7 +153,6 @@
    gnome.gnome-keyring.enable = true;
   };
   security.pam.services.login.enableGnomeKeyring = true;
-
   fileSystems."/" = {
      options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
   };
