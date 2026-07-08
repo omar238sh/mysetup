@@ -1,7 +1,7 @@
 
 
 
-{ config, lib, pkgs,inputs , system ,... }:
+{ config, pkgs,inputs  ,... }:
 
 {
   imports = [
@@ -37,12 +37,23 @@
     };
   };
   virtualisation.podman.enable = true;
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.registry = {
+
+    nixpkgs.flake = inputs.nixpkgs;
+
+    nixpkgs-unstable.to = {
+      type = "path";
+      path = pkgs.path;
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
+
   nix.nixPath =[ "nixpkgs=${inputs.nixpkgs}" ];
+  
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+      experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       trusted-users = [ "root" "omar" ];
     };
@@ -94,7 +105,7 @@
 
   users.users.omar = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "disk" "storage"];
+    extraGroups = [ "wheel" "networkmanager" ];
     shell = pkgs.fish;
   };
 
@@ -122,6 +133,8 @@
         hms = "home-manager switch --flake ~/.config/nixos#omar";
         hmu = "nix flake update --flake ~/.config/nixos && home-manager switch --flake ~/.config/nixos#omar";
         rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos#omar";
+        nixbuild = "nix flake update --override-input nixpkgs flake:nixpkgs-unstable; nix build .#devShells.x86_64-linux.default";
+        develop = "nix develop";
       };
     };
     hyprland.enable = true;
