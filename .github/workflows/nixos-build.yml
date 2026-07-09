@@ -35,6 +35,7 @@ jobs:
           nix build \
             ".#nixosConfigurations.${HOST_NAME}.config.system.build.toplevel" \
             --print-build-logs \
+            --accept-flake-config
             --out-link ./result
 
       - name: Show resulting nix store path
