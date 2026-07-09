@@ -1,0 +1,54 @@
+name: Build and Cache NixOS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+  
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+  
+    - name: Install Nix
+      uses: cachix/install-nix-action@v25
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+
+  
+    - name: Setup Cachix
+      uses: cachix/cachix-action@v14
+      with:
+        name: your-cachix-cache-name 
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+ 
+    - name: Build NixOS Configuration
+      run: |
+ 
+        nix build .#nixosConfigurations.your-hostname.config.system.build.toplevel --print-out-paths > store-path.txt
+        echo "STORE_PATH=$(cat store-path.txt)" >> $GITHUB_ENV
+
+
+    - name: Compress Nix Store Path
+      run: |
+        echo "Compressing $STORE_PATH with zstd -22..."
+
+        tar --zstd -cf system.tar.zst -C /nix/store $(basename $STORE_PATH)
+
+        export ZSTD_CLEVEL=22
+        export ZSTD_NBCORES=0 
+
+    - name: Upload Latest System Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: nixos-latest-zstd
+        path: system.tar.zst
+        if-no-files-found: error
+        overwrite: true 
