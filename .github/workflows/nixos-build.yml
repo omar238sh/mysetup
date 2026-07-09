@@ -8,7 +8,7 @@ on:
 # Name of the system in flake.nix -> nixosConfigurations.<HOST>
 env:
   HOST_NAME: omar
-  CACHIX_CACHE_NAME: omar238sh  # change this to your cache name on cachix.org
+  CACHIX_CACHE_NAME: ooo-nix  # change this to your cache name on cachix.org
 
 jobs:
   build-and-push:
