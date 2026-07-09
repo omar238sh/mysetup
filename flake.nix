@@ -1,6 +1,21 @@
 {
   description = "My NixOS Unstable Flake Configuration";
 
+  nixConfig = {
+      extra-substituters = [
+        "https://omar238sh.cachix.org"
+        "https://cache.nixos.org"
+        "https://ooo-nix.cachix.org"
+        "https://noctalia.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "ooo-nix.cachix.org-1:gjBzZvTs8M5InohgPRGayu75FvjJFajalxWS5uUuk8Q="
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        "omar238sh.cachix.org-1:QOVqP8RL66i+X8zvEM4pBlOZaoRoNzUt1hFYSvCgopI="      
+      ];
+    }; 
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
@@ -20,20 +35,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };    
 
-    nixConfig = {
-      extra-substituters = [
-        "https://omar238sh.cachix.org"
-        "https://cache.nixos.org"
-        "https://ooo-nix.cachix.org"
-        "https://noctalia.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "ooo-nix.cachix.org-1:gjBzZvTs8M5InohgPRGayu75FvjJFajalxWS5uUuk8Q="
-        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-        "omar238sh.cachix.org-1:QOVqP8RL66i+X8zvEM4pBlOZaoRoNzUt1hFYSvCgopI="      
-      ];
-    };    
+       
   };
 
 
