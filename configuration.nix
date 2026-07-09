@@ -134,6 +134,7 @@
         hmu = "nix flake update --flake ~/.config/nixos && home-manager switch --flake ~/.config/nixos#omar";
         rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos#omar";
         build = "nix flake update --override-input nixpkgs flake:nixpkgs-unstable";
+        gc = "sudo nix-collect-garbage -d";
         nixbuild = "nix flake update --override-input nixpkgs flake:nixpkgs-unstable; nix build .#devShells.x86_64-linux.default";
         develop = "nix develop";
       };
