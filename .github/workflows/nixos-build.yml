@@ -55,7 +55,7 @@ jobs:
           # Push with the highest zstd compression level (22)
           cachix push "${CACHIX_CACHE_NAME}" \
             --compression-method zstd \
-            --compression-level 22 \
+            --compression-level 16 \
             $(cat closure.txt)
 
       - name: (Optional) Pin the current path as the only "latest" one
