@@ -15,10 +15,13 @@
     hyprshot
     fastfetch
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    
+    # zed-editor   
+    lua-language-server
     nixd
     distrobox
     telegram-desktop
+    neovim
+    ripgrep
   ];
 
   programs.starship = {
@@ -26,6 +29,10 @@
     presets = [ "catppuccin-powerline" ];
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+  
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;

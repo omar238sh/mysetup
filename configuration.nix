@@ -18,7 +18,7 @@
     nixos.enable = false;
   };
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_7_1;
     kernelParams = [
       "nvidia-drm.modeset=1"
       "nvidia-drm.fbdev=1"
@@ -133,7 +133,7 @@
         hms = "home-manager switch --flake ~/.config/nixos#omar";
         hmu = "nix flake update --flake ~/.config/nixos && home-manager switch --flake ~/.config/nixos#omar";
         rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos#omar";
-        build = "nix flake update --override-input nixpkgs flake:nixpkgs-unstable";
+        build = "nix build .#devShells.x86_64-linux.default";
         gc = "sudo nix-collect-garbage -d";
         nixbuild = "nix flake update --override-input nixpkgs flake:nixpkgs-unstable; nix build .#devShells.x86_64-linux.default";
         develop = "nix develop";
@@ -184,4 +184,11 @@
       fsType = "btrfs";
       options = [ "compress=zstd:3" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
   };
+
+  
+  fileSystems."/mnt/storage" = {
+      device = "/dev/disk/by-uuid/70249422-c9e9-44e1-ad0c-cab790022cfa";
+      fsType = "btrfs";
+      options = [ "compress=zstd:10" "noatime" "space_cache=v2" "autodefrag" "discard=async"];
+  };   
 }
